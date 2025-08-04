@@ -1,0 +1,78 @@
+tokenization: char
+
+template_name: Labeler-Feed Comparator
+template_label: Labeler-Feed Comparator
+template_description: Comparing a pair of labelers or feeds
+
+database: 
+  type: firebase
+  project_id: idiom-test-f05f5
+  url: https://idiom-test-f05f5-default-rtdb.firebaseio.com/
+  collection: thresh      # (default: thresh) The database to use, this must exist on the firestore
+  document: annotation    # (default: annotation) The document to use, this must exist on the firestore
+  field: pilot2   # The document field to store annotations, we recommend changing this value between data collection runs
+
+default_data_link: https://raw.githubusercontent.com/caiyangcy/idiom-annotation/master/example.json
+
+instructions: |
+  ## Compare a Pair of Labelers or Feeds
+
+  Imagine a user is interested in using one of the two items below. How likely is it that they would also be interested in the other?
+
+  Please select the most appropriate answer based on your judgment, and provide a brief explanation for your choice.
+
+interface_text:
+  typology:
+    context_label: Context
+    source_label: Labeler / Feed A
+    target_label: Labeler / Feed B
+  annotation_editor:
+    add_edit_header: "Adding a Selection"
+    select_edit_header: "Select the Category."
+  adjudication:
+    highlight_label: "Your Annotations"
+  annotation_viewer:
+    header: "Edit Annotations"
+    not_annotated_text_1: "this edit is not annotated yet, click"
+    not_annotated_text_2: "to start!"
+
+
+edits:
+  - name: interested
+    label: "Interested"
+    color: green
+    icon: fa-check
+    annotation:
+      - name: interested_confidence
+        question: "What's your confidence on your choice?"
+        options: likert-3
+
+      - name: interested_explanation
+        question: "Put down your explanation here."
+        options: textarea
+
+  - name: uninterested
+    label: "Uninterested"
+    color: red
+    icon: fa-xmark
+    annotation:
+      - name: uninterested_confidence
+        question: "What's your confidence on your choice?"
+        options: likert-3
+
+      - name: uninterested_explanation
+        question: "Put down your explanation here."
+        options: textarea
+
+  - name: probably
+    label: "Probably"
+    color: orange
+    icon: fa-star-half 
+    annotation:
+      - name: probably_confidence
+        question: "What's your confidence on your choice?"
+        options: likert-3
+
+      - name: probably_explanation
+        question: "Put down your explanation here."
+        options: textarea
